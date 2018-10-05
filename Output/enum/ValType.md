@@ -2,9 +2,9 @@
 
 |Function Name| Description|
 |:---|:---|
-|Object |4|
 |Boolean |1|
-|String |3|
-|Number |2|
 |Function |5|
+|Number |2|
+|Object |4|
+|String |3|
 |Undefined |0|
