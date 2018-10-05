@@ -56,7 +56,7 @@ def parse(path):
                         fileName = line[(line.find(type) + len(type)):(line.find('{') - 1)].strip()
                         if '<' in fileName:
                             fileName = fileName[:fileName.find('<')]
-                        print(type + '\t' + fileName + '\t\t\t' + path)
+                        #print(type + '\t' + fileName + '\t\t\t' + path)
                         typeOfDoc = filetypes[type]
                         target = Target.NAME if typeOfDoc == DocType.ENUM else Target.DESCRIPTION_BEGIN
 
@@ -68,7 +68,7 @@ def parse(path):
                 typeOfDoc = DocType.UNDEFINED
                 target = Target.UNDEFINED
             else:
-                if '//' not in line:
+                if '//' not in line and '@' not in line:
                     if target == Target.DESCRIPTION_BEGIN:
                         if '/**' in line:
                             target = Target.DESCRIPTION_END
@@ -76,13 +76,13 @@ def parse(path):
                         if '*/' in line:
                             target = Target.NAME
                         else:
-                            description += line[line.find('*') + 2:]
+                            description += ' ' + line[line.find('*') + 2:]
                     elif target == Target.NAME:
 
                             target = Target.DESCRIPTION_BEGIN
 
                             if typeOfDoc == DocType.INTERFACE:
-                                functionName = line #line[0:(line.find(';'))]
+                                functionName = line
                             elif typeOfDoc == DocType.NAMESPACE:
                                 functionName = line[(line.find('function') + len('function')):(line.find(';'))]
                             elif typeOfDoc == DocType.ENUM:
@@ -116,6 +116,6 @@ for type in filetypes:
         for functionName in sorted(list[file]):
             list[file][functionName].replace('\n', '')
             f.write('|' + functionName + ' |' + list[file][functionName] + '|\n')
-            print(functionName)
-            print(list[file][functionName])
+            #print(functionName)
+            #print(list[file][functionName])
         #print ('\t' + interface)
